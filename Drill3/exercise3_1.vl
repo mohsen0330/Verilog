@@ -1,0 +1,43 @@
+
+module exer3_1(a1,a2,b2,a3,b3,y1,y2,y3);
+	input a1,a2,b2,a3,b3;
+	output y1,y2,y3;
+	buf (y1,a1);
+	xnor (y2,a2,b2);
+	nand (y3,a3,b3);
+endmodule
+
+module tbch3_1;
+	reg a1,a2,b2,a3,b3;
+	wire y1,y2,y3;
+	exer3_1 tbch31(a1,a2,b2,a3,b3,y1,y2,y3);
+	initial begin
+	a1=0;
+	a2=0;b2=0;
+	a3=0;b3=0;
+	#100 $finish;
+	end
+	initial begin
+	$display(" ");
+	$display("Truth table for buf");
+	$display("A Output");	
+	$monitor("%b %b",a1,y1);
+	#2 a1=1;
+	#2 a1=1;
+	$display(" ");
+	$display("Truth table for xnor");
+	$display("A B Output");
+	$monitor("%b %b %b",a2,b2,y2);
+	#2 a2=0;b2=1;
+	#2 a2=1;b2=0;
+	#2 a2=1;b2=1;
+	#2 a2=1;b2=1;
+	$display(" ");
+	$display("Truth table for nand");
+	$display("A B Output");
+	$monitor("%b %b %b",a3,b3,y3);
+	#2 a3=0;b3=1;
+	#2 a3=1;b3=0;
+	#2 a3=1;b3=1;
+	end
+endmodule

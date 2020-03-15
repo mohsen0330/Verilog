@@ -1,0 +1,44 @@
+module exer3_2(w,x,y,z,o1,o2,o3,o4);
+	input w,x,y,z;
+	output o1,o2,o3,o4;
+	wire wnot,xnot,ynot,znot;
+
+	not (wnot,w),(xnot,x),(ynot,y),(znot,z);
+	and (o1,wnot,xnot,ynot);
+	xor (o2,x,y);
+	assign o3=y;
+	assign o4=znot;
+endmodule
+
+module tbch3_2;
+	wire w1,w2,w3,w4;
+	reg x1,x2,x3,x4;
+	exer3_2 tbch3_2(x1,x2,x3,x4,w1,w2,w3,w4);
+	
+	initial begin
+	x1=1'b0;x2=1'b0;x3=1'b0;x4=1'b0;
+	#100 $finish;
+end
+
+	initial begin
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b0;x2=1'b0;x3=1'b0;x4=1'b1;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b0;x2=1'b0;x3=1'b1;x4=1'b0;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b0;x2=1'b0;x3=1'b1;x4=1'b1;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b0;x2=1'b1;x3=1'b0;x4=1'b0;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b0;x2=1'b1;x3=1'b0;x4=1'b1;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b0;x2=1'b1;x3=1'b1;x4=1'b0;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b0;x2=1'b1;x3=1'b1;x4=1'b1;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b1;x2=1'b0;x3=1'b0;x4=1'b0;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	#2 x1=1'b1;x2=1'b0;x3=1'b0;x4=1'b1;
+	#2 $display(x1,x2,x3,x4," ",w1,w2,w3,w4);
+	end
+endmodule
