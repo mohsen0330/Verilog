@@ -1,0 +1,40 @@
+module jk_flipflop(output a, input j, k, clk, reset);
+wire aofjk;
+assign aofjk=(j&~a)|(~k&a);
+d_flipflop jkf(a, aofjk, clk, reset);
+endmodule
+
+module d_flipflop(output reg b, input d, clk, reset);
+always@(posedge clk, negedge reset)
+begin
+if(~reset)
+b<=1'b0;
+else
+b<=d;
+end
+endmodule
+
+module testflipflop;
+reg j, k, clk, reset;
+wire q;
+always #1 clk=~clk;
+
+jk_flipflop jkf(q, j , k, clk, reset);
+initial clk=0;
+initial reset=0;
+initial j=0;
+initial k=0;
+initial $monitor("clk=%b reset=%b, J=%b, K=%b, Q=%b", clk, reset, j, k, q);
+
+initial fork
+#28 $finish;
+#2 reset=1;
+#4 j=1;
+#8 k=1;
+#12 j=0;
+#16 k=0;
+#20 j=1;
+#24 j=0;
+
+join
+endmodule

@@ -1,0 +1,95 @@
+module magcom(input[3:0] A,B,output lt, gt, eq);
+assign lt=(A<B);
+assign gt=(A>B);
+assign eq=(A==B);
+endmodule
+
+module testMagCom();
+reg[3:0] A,B;
+wire lt, gt, eq;
+magcom tb(A, B, lt, gt, eq);
+reg[255:0]string1, string2,string3;
+
+initial fork
+A=1'b0; B=1'b0;
+$display(" A B \t\t A<B\t\ A>B\t\t\t\t A==B");
+$monitor("%d %d %s %s %s",A,B,string1,string2,string3);
+
+join
+
+initial begin
+#1 A=4'd7; B=4'd7;
+if(lt==1) string1="true";
+else string1="false";
+if(gt==1) string2="true";
+else string2="false";
+if(eq==1) string3="true";
+else string3="false";
+
+#3 A=4'd4; B=4'd6;
+if(lt==1) string1="true";
+else string1="false";
+if(gt==1) string2="true";
+else string2="false";
+if(eq==1) string3="true";
+else string3="false";
+
+
+#5 A=4'd9; B=4'd8;
+if(lt==1) string1="true";
+else string1="false";
+if(gt==1) string2="true";
+else string2="false";
+if(eq==1) string3="true";
+else string3="false";
+
+
+#7 A=4'd10; B=4'd1;
+if(lt==1) string1="true";
+else string1="false";
+if(gt==1) string2="true";
+else string2="false";
+if(eq==1) string3="true";
+else string3="false";
+
+
+#9 $finish;
+end
+endmodule
+
+
+module task1(temp_a,temp_b,temp_c,temp_d);
+input[7:0] temp_a,temp_c;
+output[7:0] temp_b,temp_d;
+reg[7:0] temp_b,temp_d;
+initial temp_b=0;
+task convert;
+
+input[7:0] temp_in;
+output[7:0] temp_out;
+begin
+temp_out=((9*temp_in)/5)+32;
+end
+endtask
+always@(temp_a or temp_b or temp_c or temp_d)
+begin
+convert(temp_a,temp_b);
+convert(temp_c,temp_d);
+end
+endmodule
+
+module testtask1;
+
+reg[7:0] temp_a,temp_c;
+wire[7:0] temp_b,temp_d;
+task1 t1(temp_a,temp_b,temp_c,temp_d);
+
+initial begin
+#1 temp_a=8'd0;temp_c=8'd32;
+#2 $display("Temperature A in Celsius=%d",temp_a);
+#2 $display("Temperature A in Fahrenheit=%",temp_b);
+#2 $display("Temperature B in Celsius=%d",temp_c);
+#2 $display("Temperature B in Fahrenheit=%",temp_d);
+end
+
+endmodule
