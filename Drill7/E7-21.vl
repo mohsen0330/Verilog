@@ -1,0 +1,18 @@
+module recursive_function();
+	function automatic [31:0] calFactorial;
+	input [7:0] number;
+	begin
+		if (number == 1) begin
+			calFactorial=1;
+		end
+		else begin
+			calFactorial=(number*calFactorial(number-1));
+		end
+	end
+	endfunction
+	initial begin
+		$display("Multiplier:%d ", 2);
+		$display("Multiplicand:%d", 3);
+		$display("Product:%d ", calFactorial(3));
+	end
+endmodule
